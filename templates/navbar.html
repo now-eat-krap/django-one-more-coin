@@ -14,10 +14,10 @@
       </ul>
       <div class="text-end">
         {% if user.is_authenticated %}
-          <!--<button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_logout' %}'">Logout</button>-->
+          <button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_logout' %}'">Logout</button>
         {% else %}
-          <!--<button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_login' %}'">Login</button>-->
-          <!--<button type="button" class="btn btn-warning" onclick="location.href= '{% url 'account_signup' %}'">Sign-up</button>-->
+          <button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_login' %}'">Login</button>
+          <button type="button" class="btn btn-warning" onclick="location.href= '{% url 'account_signup' %}'">Sign-up</button>
         {% endif %}
       </div>
     </div>
