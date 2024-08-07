@@ -1,15 +1,16 @@
 {% load static %}
 <!doctype html>
-<html lang="ko" style="height: 100%; margin: 0;">
+<html lang="ko" style="height: 100%; margin: 0;" data-bs-theme="dark">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
-    <!-- pybo CSS -->
+    <!-- OMC CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>One More Coin</title>
+    <link href="/static/admin/css/dark.css" type="text/css" media="(prefers-color-scheme: dark)" rel="stylesheet">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
     <style type="text/css">
         @font-face {
@@ -30,6 +31,9 @@
 {% endblock %}
 
 {% include "footer.html" %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="{% static 'function.js' %}"></script>
 
 </body>
 </html>
