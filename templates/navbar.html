@@ -1,24 +1,24 @@
 {% load static %}
 
-<header class="p-3 text-bg-dark">
+<header class="p-2 border-bottom">
   <div class="container-fluid">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-5 link-body-emphasis text-decoration-none">
-        <img src={% static 'logo.png' %}>
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 link-body-emphasis text-decoration-none">
+        <img class="w-75" src={% static 'logo.png' %}>
       </a>
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 nav-tabs nav-justified h5" data-toggle="tab-hover">
-        <li><a href="#" class="nav-link px-2 text-white">매매일지</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">자동매매</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">백테스팅</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">포트폴리오</a></li>
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 fs-5 fw-bold">
+        <li><a href="#" {% if request.url|slice:"0:1" == "/journal" %} class="nav-link px-2 text-dark" {% else %} class="nav-link px-2 text-black-50" {% endif %}>매매일지</a></li>
+        <li><a href="#" {% if request.url|slice:"0:1" == "/journal" %} class="nav-link px-2 text-dark" {% else %} class="nav-link px-2 text-black-50" {% endif %}>자동매매</a></li>
+        <li><a href="#" {% if request.url|slice:"0:1" == "/journal" %} class="nav-link px-2 text-dark" {% else %} class="nav-link px-2 text-black-50" {% endif %}>백테스팅</a></li>
+        <li><a href="#" {% if request.url|slice:"0:1" == "/journal" %} class="nav-link px-2 text-dark" {% else %} class="nav-link px-2 text-black-50" {% endif %}>포트폴리오</a></li>
       </ul>
       <div class="text-end">
-        <button class="mode-change-btn" onclick="darkMode()">다크모드설정</button>
+        <button class="mode-change-btn btn bg-transparent"><i class="bi bi-sun h4"></i></button>
         {% if user.is_authenticated %}
-          <button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_logout' %}'">Logout</button>
+          <button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_logout' %}'">로그아웃</button>
         {% else %}
-          <button type="button" class="btn btn-outline-light me-2" onclick="location.href= '{% url 'account_login' %}'">Login</button>
-          <button type="button" class="btn btn-warning" onclick="location.href= '{% url 'account_signup' %}'">Sign-up</button>
+          <button type="button" class="btn btn-outline-dark me-2 btn-sm" onclick="location.href= '{% url 'account_login' %}'">로그인</button>
+          <button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href= '{% url 'account_signup' %}'">회원가입</button>
         {% endif %}
       </div>
     </div>
