@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container min-vh-100 my-3">
+    <table class="table">
+        <thead>
+        <tr class="table-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if journal_list %}
+        {% for journal in journal_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="#">{{ journal.created_at|date:'m월 d일'}} 매매일지</a>
+            </td>
+            <td>{{ journal.updated_at}}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">매매일지가 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
