@@ -27,4 +27,7 @@
     --bs-gradient: none;
   }
 
+  .text-dark {
+    color:#fff!important
+  }
 }

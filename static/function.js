@@ -31,7 +31,6 @@ function clickDarkMode() {
 function clickLightMode() {
     localStorage.setItem("theme", "light")
     icon.className = "bi bi-sun h4"
-    //button.innerText='<i class="bi bi-sun h4"></i>'
     document.documentElement.setAttribute('data-bs-theme', 'light')
     status = false
 }

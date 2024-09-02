@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container min-vh-100 my-4">
+    <h2>매매일지</h2>
+   
+    <form class="row float-start mb-3" action="{% url 'trade_journal:index' %}" method="POST">
+        {% csrf_token %}
+        <select class="form-select col mx-2" name="date-order" id="date-order" aria-label="Default select example" onchange="this.form.submit();">
+            <option value="" selected>쵯ㄴ</option>
+            <option value="최신순" selected>최신순</option>
+            <option value="오래된순">오래된순</option>
+        </select>
+    </form>
+
+    <table class="table table-light table-hover my-3">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>거래소</th>
+            <th>코인종류</th>
+            <th>작성일</th>
+            <th>수정일</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if journal_list %}
+        {% for journal in journal_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href="#" class="text-dark text-decoration-none">{{ journal.created_at|date:'m월 d일'}} 매매일지</a>
+            </td>
+            <td>{{journal.currency}}</td>
+            <td>{{journal.symbol}}</td>
+            <td>{{journal.created_at}}</td>
+            <td>{{journal.updated_at}}</td> 
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">매매일지가 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,31 +1,129 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container min-vh-100 my-3">
-    <table class="table">
-        <thead>
-        <tr class="table-dark">
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if journal_list %}
-        {% for journal in journal_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                <a href="#">{{ journal.created_at|date:'m월 d일'}} 매매일지</a>
-            </td>
-            <td>{{ journal.updated_at}}</td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">매매일지가 없습니다.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
+<div class="container min-vh-100 my-4">
+    <h2>매매일지</h2>
+   
+    <form class="my-2" action="{% url 'trade_journal:index' %}" method="GET" id="sort">
+        <select class="form-select float-start mx-2 my-3" name="sort" id="sort" aria-label="Default select example" style="width:auto;">
+            <option value="newest">최신순</option>
+            <option value="oldest">오래된순</option>
+        </select>
+
+        <div class="float-end mt-3">
+            <span class="h5 mx-2 my-3" >날짜 선택</span>
+            <div id="date_range_picker" class="border rounded d-inline-flex" style="width:auto; align-items: center;">
+                <i class="bi bi-calendar-minus m-2"></i>
+                <span>전체</span> <i class="bi bi-caret-down mx-2"></i>
+            </div>
+        </div>
+
+        <table class="table table-hover my-3 border text-center">
+            <thead>
+            <tr class="align-middle">
+                <th>#</th>
+                <th>제목</th>
+                <th>거래소
+                    {% if journal_list %}
+                    <select class="form-select col mx-2 d-inline" name="currency" id="currency" aria-label="Default select example" style="width:auto;">
+                        <option value='all'}>전체</option>
+                        {% for currency in currency_list %}
+                            <option value={{currency.currency}}>{{currency.currency}}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                </th>
+                <th>코인종류
+                    {% if journal_list %}
+                    <select class="form-select col mx-2 d-inline" name="symbol" id="symbol" aria-label="Default select example" style="width:auto;">
+                        <option value='all'}>전체</option>
+                        {% for symbol in symbol_list %}
+                            <option value={{symbol.symbol}}>{{symbol.symbol}}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                </th>
+                <th>작성일</th>
+                <th>수정일</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if journal_list %}
+            {% for journal in journal_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>
+                    <a href="#" class="text-dark text-decoration-none">{{ journal.created_at|date:'m월 d일'}} 매매일지</a>
+                </td>
+                <td>{{journal.currency}}</td>
+                <td>{{journal.symbol}}</td>
+                <td>{{journal.created_at|date:'y년 m월 d일 G:i'}}</td>
+                <td>{{journal.updated_at|date:'y년 m월 d일 G:i'}}</td> 
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="3">매매일지가 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </form>
 </div>
+<script type="text/javascript">
+   $("select[name=sort]").val("{{sort_list}}"); 
+   $("select[name=currency]").val("{{currency_value}}");
+   $("select[name=symbol]").val("{{symbol_value}}");
+
+   $(document).ready(function(){
+        $("select[name=sort], select[name=currency], select[name=symbol]").change(function () {
+            sort = $("select[name=sort]").val();
+            currency = $("select[name=currency]").val();
+            symbol = $("select[name=symbol]").val();
+            $("#sort, #currency, #symbol").submit();
+            
+        });
+    });
+
+    // date range picker start
+    $("#date_range_picker").daterangepicker({
+        "maxDate": moment(),                        // 현재 날짜를 최대선택 날짜로 구현
+        "locale": {
+            "separator": " ~ ",                     // 시작일시와 종료일시 구분자
+            "format": 'YYYY-MM-DD',     // 일시 노출 포맷
+            "applyLabel": "확인",                    // 확인 버튼 텍스트
+            "cancelLabel": "삭제",                   // 삭제 버튼 텍스트
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"]
+        },
+        "ranges": {
+            "오늘": [moment(), moment()],
+            "지난 7일": [moment().subtract(6, 'days'), moment()],
+            "지난 1개월": [moment().subtract(1, 'months'), moment()],
+            "지난 3개월": [moment().subtract(3, 'months'), moment()],
+            "지난 1년": [moment().subtract(1, 'years'), moment()],
+        },
+        "alwaysShowCalendars": true,                 // 항상 캘린더 노출
+        "autoUpdateInpute": false,                  // 날짜 자동업데이트기능 삭제
+        "timePicker": false,                        // 시간 노출 여부
+        "showDropdowns": true,                     // 년월 수동 설정 여부
+        "autoApply": false,                         // 확인/취소 버튼 사용여부
+        "singleDatePicker": false,                   // 하나의 달력 사용 여부
+    });
+   
+    $("#date_range_picker").on('apply.daterangepicker', function(ev, picker) {
+        $("#date_range_picker span").html(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+    });
+
+    $("#date_range_picker").on('cancel.daterangepicker', function(ev, picker) {
+        $("#date_range_picker span").html('전체');
+    });
+
+    $("#date_range_picker").on('show.daterangepicker', function (ev, picker) {
+        $(".yearselect").css("float", "left");
+        $(".monthselect").css("float", "right");
+        $(".cancelBtn").css("float", "right");
+    });
+
+
+</script>
 {% endblock %}
