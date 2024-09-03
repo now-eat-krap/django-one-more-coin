@@ -4,16 +4,15 @@
     <h2>매매일지</h2>
    
     <form class="my-2" action="{% url 'trade_journal:index' %}" method="GET" id="sort">
-        <select class="form-select float-start mx-2 my-3" name="sort" id="sort" aria-label="Default select example" style="width:auto;">
-            <option value="newest">최신순</option>
-            <option value="oldest">오래된순</option>
-        </select>
+        <div class="float-start my-3 me-3">
+            <select class="form-select d-inline h-100" name="sort" id="sort" aria-label="Default select example" style="width:auto;">
+                <option value="newest">최신순</option>
+                <option value="oldest">오래된순</option>
+            </select>
 
-        <div class="float-end mt-3">
-            <span class="h5 mx-2 my-3" >날짜 선택</span>
-            <div id="date_range_picker" class="border rounded d-inline-flex" style="width:auto; align-items: center;">
-                <i class="bi bi-calendar-minus m-2"></i>
-                <span>전체</span> <i class="bi bi-caret-down mx-2"></i>
+            <div id="date_range_picker" class="form-select border rounded d-inline-flex h-100" style="width:auto; align-items: center;">
+                <i class="bi bi-calendar-minus me-2"></i>
+                <span>날짜 선택</span>
             </div>
         </div>
 
@@ -111,18 +110,13 @@
     });
    
     $("#date_range_picker").on('apply.daterangepicker', function(ev, picker) {
-        $("#date_range_picker span").html(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
+        $("#date_range_picker span").html(picker.startDate.format("YYYY/MM/DD") + " - " + picker.endDate.format("YYYY/MM/DD"));
     });
 
     $("#date_range_picker").on('cancel.daterangepicker', function(ev, picker) {
-        $("#date_range_picker span").html('전체');
+        $("#date_range_picker span").html("날짜 선택");
     });
 
-    $("#date_range_picker").on('show.daterangepicker', function (ev, picker) {
-        $(".yearselect").css("float", "left");
-        $(".monthselect").css("float", "right");
-        $(".cancelBtn").css("float", "right");
-    });
 
 
 </script>

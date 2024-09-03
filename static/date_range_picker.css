@@ -1,0 +1,18 @@
+.daterangepicker {
+  box-shadow: 0px 0px 3px 3px #555555;
+}
+
+.yearselect {
+  float:left;
+}
+.monthselect {
+  float:right;
+}
+
+.cancelBtn {
+  float:right;
+}
+
+.daterangepicker td.active, .daterangepicker td.active:hover {
+  background-color: #fff;
+}

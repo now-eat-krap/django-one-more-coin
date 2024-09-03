@@ -30,4 +30,36 @@
   .text-dark {
     color:#fff!important
   }
+
+  /* date range picker dark mode */
+  .daterangepicker {
+    z-index: 3001;
+    background-color: #1a1b1e;
+  }
+
+  .daterangepicker .calendar-table {
+     background-color: #1a1b1e;
+     border: 1px solid #1a1b1e;
+  }
+  .daterangepicker .calendar-table .off {
+     background-color: #1a1b1e;
+     color:#495057;;
+  }
+
+  .daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span {
+     border: solid white;
+     border-width: 0 2px 2px 0;
+  }
+
+  .daterangepicker .drp-calendar .calendar-table .in-range:not(.off):not(.start-date):not(.end-date) {
+    background-color: #6c757d;
+    color: #fff;
+  }
+  .daterangepicker .drp-calendar .calendar-table .in-range .start-date .end-date {
+     background-color:#357ebd;
+  }
+
+  .daterangepicker td.available:hover, .daterangepicker th.available:hover {
+    background-color:#6c757d;
+  }
 }
