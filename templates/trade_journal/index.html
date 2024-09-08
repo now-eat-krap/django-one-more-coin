@@ -13,6 +13,7 @@
             <div id="date_range_picker" class="form-select border rounded d-inline-flex h-100" style="width:auto; align-items: center;">
                 <i class="bi bi-calendar-minus me-2"></i>
                 <span>날짜 선택</span>
+                <input type="hidden" name="date_range" id="date_range" value="날짜 선택"/>
             </div>
         </div>
 
@@ -69,23 +70,32 @@
     </form>
 </div>
 <script type="text/javascript">
-   $("select[name=sort]").val("{{sort_list}}"); 
+   $("select[name=sort]").val("{{sort_value}}");
    $("select[name=currency]").val("{{currency_value}}");
    $("select[name=symbol]").val("{{symbol_value}}");
+   $("input[name=date_range]").val("{{date_range_value}}");
+   $("#date_range_picker span").html("{{date_range_value}}");
 
    $(document).ready(function(){
         $("select[name=sort], select[name=currency], select[name=symbol]").change(function () {
-            sort = $("select[name=sort]").val();
-            currency = $("select[name=currency]").val();
-            symbol = $("select[name=symbol]").val();
-            $("#sort, #currency, #symbol").submit();
-            
+            //sort = $("select[name=sort]").val();
+            //currency = $("select[name=currency]").val();
+            //symbol = $("select[name=symbol]").val();
+            //date_range = $("input[name=date_range]").val();
+            $("#sort, #currency, #symbol #date_range").submit();
+
         });
     });
 
+    console.log({{date_range.0|date:'Y/m/d'}})
     // date range picker start
     $("#date_range_picker").daterangepicker({
-        "maxDate": moment(),                        // 현재 날짜를 최대선택 날짜로 구현
+        {% if date_range %}
+        "startDate": "{{date_range.0|date:'Y/m/d'}}",
+        "endDate": "{{date_range.1|date:'Y/m/d'}}",
+        {% endif %}
+        "minDate": "{{start_end_date_list.0.created_at|date:'Y/m/d'}}",
+        "maxDate": "{{start_end_date_list.1.created_at|date:'Y/m/d'}}", // 데이터 베이스의 시작과 끝 시간을 최대 최소 시간으로 설정
         "locale": {
             "separator": " ~ ",                     // 시작일시와 종료일시 구분자
             "format": 'YYYY-MM-DD',     // 일시 노출 포맷
@@ -108,16 +118,20 @@
         "autoApply": false,                         // 확인/취소 버튼 사용여부
         "singleDatePicker": false,                   // 하나의 달력 사용 여부
     });
-   
+
     $("#date_range_picker").on('apply.daterangepicker', function(ev, picker) {
         $("#date_range_picker span").html(picker.startDate.format("YYYY/MM/DD") + " - " + picker.endDate.format("YYYY/MM/DD"));
+        $("input[name=date_range]").val(picker.startDate.format("YYYY/MM/DD") + " - " + picker.endDate.format("YYYY/MM/DD"));
+        $("#sort, #currency, #symbol #date_range").submit();
     });
 
     $("#date_range_picker").on('cancel.daterangepicker', function(ev, picker) {
         $("#date_range_picker span").html("날짜 선택");
+        $("input[name=date_range]").val("날짜 선택");
+        $("#sort, #currency, #symbol #date_range").submit();
     });
-
-
+   
+    $(".drp-selected").hide();
 
 </script>
 {% endblock %}

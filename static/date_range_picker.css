@@ -13,6 +13,17 @@
   float:right;
 }
 
-.daterangepicker td.active, .daterangepicker td.active:hover {
+.daterangepicker td.active {
   background-color: #fff;
+  color:black;
+}
+
+.daterangepicker td.active:hover { 
+  background-color:#eee;
+  color:black;
+}
+
+.daterangepicker td.start-date, .daterangepicker td.end-date { 
+  background-color:#357ebd;
+  color:white;
 }
